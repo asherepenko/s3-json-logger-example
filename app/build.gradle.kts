@@ -12,11 +12,7 @@ plugins {
 }
 
 val appName = "s3-json-logger"
-val version = BuildVersion(
-    major = 0,
-    minor = 0,
-    patch = 1
-)
+val version = BuildVersion.parse(project.file("version"))
 val awsPropertiesFile = rootProject.file("aws.properties")
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 

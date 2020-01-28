@@ -16,11 +16,7 @@ plugins {
 group = "com.sherepenko.android"
 
 val libName = "logger"
-val version = BuildVersion(
-    major = 1,
-    minor = 0,
-    patch = 0
-)
+val version = BuildVersion.parse(project.file("version"))
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 
 android {
