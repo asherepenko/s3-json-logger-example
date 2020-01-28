@@ -29,6 +29,7 @@ android {
         applicationId = "com.sherepenko.android.logger.example"
         versionCode = version.versionCode
         versionName = version.versionName
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         setProperty("archivesBaseName", "$appName-$versionName")

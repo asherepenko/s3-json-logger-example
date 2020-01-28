@@ -54,6 +54,7 @@ class App : Application(), KodeinAware {
     private val applicationModule = Kodein.Module(APPLICATION_MODULE) {
         bind<ArchivariusAnalytics.ArchivariusAnalyticsImpl>() with singleton {
             object : ArchivariusAnalytics.ArchivariusAnalyticsImpl {
+
                 override fun reportToCrashlytics(tag: String, e: Throwable) {
                     FirebaseCrashlytics.getInstance().apply{
                         recordException(e)
@@ -65,6 +66,7 @@ class App : Application(), KodeinAware {
 
         bind<ArchivariusStrategy.ArchivariusStrategyImpl>() with singleton {
             object : ArchivariusStrategy.ArchivariusStrategyImpl {
+
                 override val isInDebugMode: Boolean = true
 
                 override val isLogcatEnabled: Boolean = true
