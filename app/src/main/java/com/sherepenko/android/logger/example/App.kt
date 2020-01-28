@@ -1,6 +1,7 @@
 package com.sherepenko.android.logger.example
 
 import android.app.Application
+import android.os.Build
 import android.os.Environment
 import android.os.Process
 import android.util.Base64
@@ -9,12 +10,15 @@ import androidx.work.ListenableWorker
 import com.amazonaws.auth.AWSCredentials
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.regions.Region
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.sherepenko.android.archivarius.Archivarius
 import com.sherepenko.android.archivarius.ArchivariusAnalytics
 import com.sherepenko.android.archivarius.ArchivariusStrategy
+import com.sherepenko.android.archivarius.data.LogType
 import com.sherepenko.android.archivarius.uploaders.LogUploadWorker
 import com.sherepenko.android.archivarius.uploaders.LogUploader
 import com.sherepenko.android.archivarius.uploaders.S3LogUploader
+import com.sherepenko.android.archivarius.uploaders.S3LogUrlGeneratorApi
 import com.sherepenko.android.logger.ArchivariusLogger
 import com.sherepenko.android.logger.Logger
 import com.sherepenko.android.logger.withApplicationId
@@ -23,7 +27,6 @@ import com.sherepenko.android.logger.withUserId
 import java.io.File
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.androidXContextTranslators
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.factory
@@ -40,8 +43,7 @@ class App : Application(), KodeinAware {
 
         private const val PER_USER_RANGE = 100000
 
-        private val currentUserId: Int
-            get() = Process.myUid() / PER_USER_RANGE
+        private val currentUserId: Int = Process.myUid() / PER_USER_RANGE
     }
 
     override val kodein by Kodein.lazy {
@@ -53,6 +55,10 @@ class App : Application(), KodeinAware {
         bind<ArchivariusAnalytics.ArchivariusAnalyticsImpl>() with singleton {
             object : ArchivariusAnalytics.ArchivariusAnalyticsImpl {
                 override fun reportToCrashlytics(tag: String, e: Throwable) {
+                    FirebaseCrashlytics.getInstance().apply{
+                        recordException(e)
+                        sendUnsentReports()
+                    }
                 }
             }
         }
@@ -70,8 +76,7 @@ class App : Application(), KodeinAware {
                 override val rotateFilePostfix: String = DEFAULT_LOG_POSTFIX
 
                 override val parentLogDir: File by lazy {
-                    if (!BuildConfig.DEBUG &&
-                            Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
+                    if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
                         this@App.obbDir
                     } else {
                         this@App.filesDir
@@ -79,12 +84,16 @@ class App : Application(), KodeinAware {
                 }
 
                 override val logUploader: LogUploader by lazy {
+                    val logBucketMeta = provideLogBucketMeta()
+
                     S3LogUploader(
-                        S3LogUploader.LogBucketMeta(
-                            credentials = provideAwsCredentials(),
-                            bucketName = BuildConfig.AWS_BUCKET_NAME,
-                            region = Region.getRegion(BuildConfig.AWS_BUCKET_REGION)
-                        )
+                        logBucketMeta = logBucketMeta,
+                        api = object : S3LogUrlGeneratorApi(logBucketMeta) {
+
+                            override fun generateLogKey(logName: String, logType: LogType): String =
+                                "${Build.MANUFACTURER}/${Build.MODEL}/${Build.PRODUCT}/}" +
+                                    super.generateLogKey(logName, logType)
+                        }
                     )
                 }
 
@@ -101,6 +110,13 @@ class App : Application(), KodeinAware {
 
                     return BasicAWSCredentials(accessKeyDecoded, secretKeyDecoded)
                 }
+
+                private fun provideLogBucketMeta(): S3LogUploader.LogBucketMeta =
+                    S3LogUploader.LogBucketMeta(
+                        BuildConfig.AWS_BUCKET_NAME,
+                        provideAwsCredentials(),
+                        Region.getRegion(BuildConfig.AWS_BUCKET_REGION)
+                    )
             }
         }
 

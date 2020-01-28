@@ -11,7 +11,7 @@ plugins {
     kotlin("android.extensions")
 }
 
-val archivesBaseName = "s3-json-logger"
+val appName = "s3-json-logger"
 val version = BuildVersion(
     major = 0,
     minor = 0,
@@ -31,7 +31,7 @@ android {
         versionName = version.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        setProperty("archivesBaseName", "$archivesBaseName-$versionName")
+        setProperty("archivesBaseName", "$appName-$versionName")
 
         if (awsPropertiesFile.exists()) {
             val awsProperties = Properties().apply {
@@ -123,6 +123,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("com.google.firebase:firebase-analytics:17.2.2")
+    implementation("com.google.firebase:firebase-crashlytics:17.0.0-beta01")
     implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")
     implementation("org.kodein.di:kodein-di-framework-android-x:$kodeinVersion")
     testImplementation("junit:junit:4.12")
@@ -133,3 +135,6 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
+
+apply(plugin = "com.google.gms.google-services")
+apply(plugin = "com.google.firebase.crashlytics")

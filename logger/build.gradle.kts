@@ -15,7 +15,7 @@ plugins {
 
 group = "com.sherepenko.android"
 
-val archivesBaseName = "logger"
+val libName = "logger"
 val version = BuildVersion(
     major = 1,
     minor = 0,
@@ -33,7 +33,7 @@ android {
         versionName = version.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        setProperty("archivesBaseName", "$archivesBaseName-$versionName")
+        setProperty("archivesBaseName", "$libName-$versionName")
         consumerProguardFiles("consumer-rules.pro")
     }
 

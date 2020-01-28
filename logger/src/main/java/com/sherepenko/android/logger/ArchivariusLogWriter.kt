@@ -15,8 +15,9 @@ interface GlobalLogContextContainer {
     fun extendGlobalContext(logContext: LogContext)
 }
 
-class ArchivariusLogWriter(private val archivarius: Archivarius) :
-        LogWriter, GlobalLogContextContainer {
+class ArchivariusLogWriter(
+    private val archivarius: Archivarius
+) : LogWriter, GlobalLogContextContainer {
 
     private var globalLogContext: LogContext = emptyMap()
 

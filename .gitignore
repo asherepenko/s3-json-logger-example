@@ -15,3 +15,4 @@
 /keystore
 .externalNativeBuild
 .cxx
+src/test/java/com/sherepenko/android/logger/example/
