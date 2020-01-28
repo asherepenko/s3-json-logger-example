@@ -56,7 +56,7 @@ class App : Application(), KodeinAware {
             object : ArchivariusAnalytics.ArchivariusAnalyticsImpl {
 
                 override fun reportToCrashlytics(tag: String, e: Throwable) {
-                    FirebaseCrashlytics.getInstance().apply{
+                    FirebaseCrashlytics.getInstance().apply {
                         recordException(e)
                         sendUnsentReports()
                     }
