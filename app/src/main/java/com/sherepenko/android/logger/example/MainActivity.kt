@@ -21,12 +21,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupViews()
         logger.warning("Activity created")
-
-        uploadButton.setOnClickListener {
-            uploadButton.isEnabled = false
-            uploadLogs()
-        }
     }
 
     override fun onStart() {
@@ -52,6 +48,15 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override fun onDestroy() {
         super.onDestroy()
         logger.warning("Activity destroyed")
+    }
+
+    private fun setupViews() {
+        supportActionBar?.setTitle(R.string.app_name)
+
+        uploadButton.setOnClickListener {
+            uploadButton.isEnabled = false
+            uploadLogs()
+        }
     }
 
     private fun uploadLogs() {

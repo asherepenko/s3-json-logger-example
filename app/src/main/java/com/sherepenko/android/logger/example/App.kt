@@ -93,7 +93,8 @@ class App : Application(), KodeinAware {
                         api = object : S3LogUrlGeneratorApi(logBucketMeta) {
 
                             override fun generateLogKey(logName: String, logType: LogType): String =
-                                "${Build.MANUFACTURER}/${Build.MODEL}/${Build.PRODUCT}/}" +
+                                "${Build.MANUFACTURER.replace("\\s".toRegex(), "")}/" +
+                                    "${Build.MODEL.replace("\\s".toRegex(), "")}/" +
                                     super.generateLogKey(logName, logType)
                         }
                     )
