@@ -8,8 +8,6 @@ import com.sherepenko.android.archivarius.Archivarius
 import com.sherepenko.android.archivarius.ArchivariusAnalytics
 import com.sherepenko.android.archivarius.utils.LogUtils
 import io.reactivex.Single
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import java.util.concurrent.ExecutionException
 
 open class LogUploadWorker(
