@@ -48,7 +48,7 @@ open class LogUploadWorker(
                     }
             } catch (e: InterruptedException) {
                 LogUtils.info("-------------------------------------------------")
-                LogUtils.error("[Worker] Log uploading interrupted", e)
+                LogUtils.error("[WORKER] Log uploading interrupted", e)
                 LogUtils.info("=================================================")
                 ArchivariusAnalytics.get().reportToCrashlytics(LogUtils.TAG, e)
             } catch (e: ExecutionException) {
