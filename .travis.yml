@@ -1,8 +1,5 @@
 language: android
-os: linux
-arch: arm64
-dist: bionic
-jdk: oraclejdk8
+dist: trusty
 
 android:
   components:
@@ -24,7 +21,7 @@ before_install:
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:
@@ -36,4 +33,4 @@ before_script:
   - chmod +x gradlew
 
 script:
-  - ./gradlew clean check
+  - ./gradlew clean check --no-daemon
