@@ -10,15 +10,16 @@ android:
     - extra-android-m2repository
 
   licenses:
-    - 'android-sdk-preview-license-52d11cd2'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+    - android-sdk-preview-license-52d11cd2
+    - android-sdk-license-.+
+    - google-gdk-license-.+
 
 before_install:
   - touch $HOME/.android/repositories.cfg
   - yes | sdkmanager "platforms;android-29"
   - yes | sdkmanager "build-tools;29.0.2"
-  - openssl aes-256-cbc -K $encrypted_3dff7144c0e0_key -iv $encrypted_3dff7144c0e0_iv -in app/google-services.json.enc -out app/google-services.json -d
+  - openssl aes-256-cbc -K $encrypted_58fdb16d24a9_key -iv $encrypted_58fdb16d24a9_iv
+    -in google-services.json.enc -out app/google-services.json -d
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -26,12 +27,12 @@ before_cache:
 
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
+    - "$HOME/.android/build-cache"
 
 before_script:
   - chmod +x gradlew
 
 script:
-  - ./gradlew clean check
+  - "./gradlew clean check"
