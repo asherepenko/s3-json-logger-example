@@ -1,6 +1,5 @@
 *.iml
 .gradle
-/aws.properties
 /local.properties
 /keystore.properties
 /.idea/caches

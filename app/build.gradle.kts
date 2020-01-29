@@ -55,6 +55,11 @@ android {
                 "AWS_BUCKET_REGION",
                 "\"${awsProperties.getProperty("aws.bucketRegion")}\""
             )
+        } else {
+            buildConfigField("String", "AWS_ACCESS_KEY_ENCODED", "\"\"")
+            buildConfigField("String", "AWS_SECRET_KEY_ENCODED", "\"\"")
+            buildConfigField("String", "AWS_BUCKET_NAME", "\"\"")
+            buildConfigField("String", "AWS_BUCKET_REGION", "\"\"")
         }
     }
 
