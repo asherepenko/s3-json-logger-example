@@ -49,12 +49,12 @@ android {
     }
 
     signingConfigs {
-        if (keystorePropertiesFile.exists()) {
-            val keystoreProperties = Properties().apply {
-                load(FileInputStream(keystorePropertiesFile))
-            }
+        create("release") {
+            if (keystorePropertiesFile.exists()) {
+                val keystoreProperties = Properties().apply {
+                    load(FileInputStream(keystorePropertiesFile))
+                }
 
-            create("release") {
                 storeFile = rootProject.file(keystoreProperties.getProperty("keystore.file"))
                 storePassword = keystoreProperties.getProperty("keystore.password")
                 keyAlias = keystoreProperties.getProperty("keystore.key.alias")
