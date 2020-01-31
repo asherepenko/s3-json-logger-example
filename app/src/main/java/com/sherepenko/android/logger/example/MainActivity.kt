@@ -3,9 +3,8 @@ package com.sherepenko.android.logger.example
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.work.Operation
 import com.sherepenko.android.logger.Logger
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.uploadButton
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -17,6 +16,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein: Kodein by kodein()
 
     private val logger: Logger by instance(arg = "MainActivity")
+
+    private val disposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override fun onDestroy() {
         super.onDestroy()
         logger.warning("Activity destroyed")
+        disposable.dispose()
     }
 
     private fun setupViews() {
@@ -60,9 +62,9 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun uploadLogs() {
-        logger.forceLogUpload().state.observe(this@MainActivity, Observer {
-            when (it) {
-                is Operation.State.SUCCESS -> {
+        logger.forceLogUpload()
+            .subscribe(
+                {
                     logger.info("Logs successfully uploaded")
                     Toast.makeText(
                         this@MainActivity,
@@ -70,12 +72,9 @@ class MainActivity : AppCompatActivity(), KodeinAware {
                         Toast.LENGTH_LONG
                     ).show()
                     uploadButton.isEnabled = true
-                }
-                is Operation.State.IN_PROGRESS -> {
-                    logger.info("Logs uploading...")
-                }
-                is Operation.State.FAILURE -> {
-                    logger.error("Cannot upload logs from device")
+                },
+                {
+                    logger.error("Cannot upload logs from device", it)
                     Toast.makeText(
                         this@MainActivity,
                         "Cannot upload logs from device",
@@ -83,7 +82,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
                     ).show()
                     uploadButton.isEnabled = true
                 }
+            ).also {
+                disposable.add(it)
             }
-        })
     }
 }

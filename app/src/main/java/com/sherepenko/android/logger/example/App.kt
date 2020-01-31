@@ -21,7 +21,6 @@ import com.sherepenko.android.archivarius.uploaders.S3LogUploader
 import com.sherepenko.android.archivarius.uploaders.S3LogUrlGeneratorApi
 import com.sherepenko.android.logger.ArchivariusLogger
 import com.sherepenko.android.logger.Logger
-import com.sherepenko.android.logger.withApplicationId
 import com.sherepenko.android.logger.withTag
 import com.sherepenko.android.logger.withUserId
 import java.io.File
@@ -132,8 +131,7 @@ class App : Application(), KodeinAware {
         }
 
         bind<Logger>() with factory { tag: String ->
-            ArchivariusLogger(instance())
-                .withApplicationId(BuildConfig.APPLICATION_ID)
+            ArchivariusLogger(BuildConfig.APPLICATION_ID, instance<Archivarius>())
                 .withUserId(currentUserId.toString())
                 .withTag(tag)
         }

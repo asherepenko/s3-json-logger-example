@@ -11,10 +11,11 @@ plugins {
     kotlin("android.extensions")
 }
 
-val appName = "s3-json-logger"
-val version = BuildVersion.parse(project.file("version"))
-val awsPropertiesFile = rootProject.file("aws.properties")
+val archivesBaseName = "s3-json-logger"
+val buildVersion = BuildVersion.parse(rootProject.file("version"))
+
 val keystorePropertiesFile = rootProject.file("keystore.properties")
+val awsPropertiesFile = project.file("aws.properties")
 
 android {
     compileSdkVersion(29)
@@ -23,12 +24,12 @@ android {
         minSdkVersion(19)
         targetSdkVersion(29)
         applicationId = "com.sherepenko.android.logger.example"
-        versionCode = version.versionCode
-        versionName = version.versionName
+        versionCode = buildVersion.versionCode
+        versionName = buildVersion.versionName
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        setProperty("archivesBaseName", "$appName-$versionName")
+        setProperty("archivesBaseName", "$archivesBaseName-$versionName")
 
         if (awsPropertiesFile.exists()) {
             val awsProperties = Properties().apply {
@@ -117,14 +118,15 @@ ktlint {
     }
 }
 
+val loggerVersion = "1.0.0"
 val kodeinVersion = "6.5.0"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-    implementation(project(":logger"))
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
     implementation("com.google.firebase:firebase-analytics:17.2.2")
     implementation("com.google.firebase:firebase-crashlytics:17.0.0-beta01")
     implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")

@@ -1,1 +1,1 @@
-include(":app", ":archivarius", ":logger")
+include(":app")
