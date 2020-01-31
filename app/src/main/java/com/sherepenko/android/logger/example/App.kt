@@ -15,11 +15,11 @@ import com.sherepenko.android.archivarius.Archivarius
 import com.sherepenko.android.archivarius.ArchivariusAnalytics
 import com.sherepenko.android.archivarius.ArchivariusStrategy
 import com.sherepenko.android.archivarius.data.LogType
+import com.sherepenko.android.archivarius.logger.ArchivariusLogger
 import com.sherepenko.android.archivarius.uploaders.LogUploadWorker
 import com.sherepenko.android.archivarius.uploaders.LogUploader
 import com.sherepenko.android.archivarius.uploaders.S3LogUploader
 import com.sherepenko.android.archivarius.uploaders.S3LogUrlGeneratorApi
-import com.sherepenko.android.logger.ArchivariusLogger
 import com.sherepenko.android.logger.Logger
 import com.sherepenko.android.logger.withTag
 import com.sherepenko.android.logger.withUserId

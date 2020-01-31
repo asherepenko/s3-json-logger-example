@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.sherepenko.android.logger.Logger
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.uploadButton
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -62,27 +65,28 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun uploadLogs() {
-        logger.forceLogUpload().subscribe(
-            {
-                logger.info("Logs successfully uploaded")
-                Toast.makeText(
-                    this@MainActivity,
-                    "Logs successfully uploaded",
-                    Toast.LENGTH_LONG
-                ).show()
-                uploadButton.isEnabled = true
-            },
-            {
-                logger.error("Cannot upload logs from device", it)
-                Toast.makeText(
-                    this@MainActivity,
-                    "Cannot upload logs from device",
-                    Toast.LENGTH_LONG
-                ).show()
-                uploadButton.isEnabled = true
-            }
-        ).also {
-            disposable.add(it)
-        }
+        logger.forceLogUpload()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onComplete = {
+                    logger.info("Logs successfully uploaded")
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Logs successfully uploaded",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    uploadButton.isEnabled = true
+                },
+                onError = {
+                    logger.error("Cannot upload logs from device", it)
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Cannot upload logs from device",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    uploadButton.isEnabled = true
+                }
+            )
+            .addTo(disposable)
     }
 }
