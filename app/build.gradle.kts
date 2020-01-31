@@ -14,8 +14,8 @@ plugins {
 val archivesBaseName = "s3-json-logger"
 val buildVersion = BuildVersion.parse(rootProject.file("version"))
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
 val awsPropertiesFile = project.file("aws.properties")
+val keystorePropertiesFile = project.file("keystore.properties")
 
 android {
     compileSdkVersion(29)
