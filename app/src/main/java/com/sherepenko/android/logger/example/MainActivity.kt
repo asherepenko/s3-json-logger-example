@@ -62,28 +62,27 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun uploadLogs() {
-        logger.forceLogUpload()
-            .subscribe(
-                {
-                    logger.info("Logs successfully uploaded")
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Logs successfully uploaded",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    uploadButton.isEnabled = true
-                },
-                {
-                    logger.error("Cannot upload logs from device", it)
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Cannot upload logs from device",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    uploadButton.isEnabled = true
-                }
-            ).also {
-                disposable.add(it)
+        logger.forceLogUpload().subscribe(
+            {
+                logger.info("Logs successfully uploaded")
+                Toast.makeText(
+                    this@MainActivity,
+                    "Logs successfully uploaded",
+                    Toast.LENGTH_LONG
+                ).show()
+                uploadButton.isEnabled = true
+            },
+            {
+                logger.error("Cannot upload logs from device", it)
+                Toast.makeText(
+                    this@MainActivity,
+                    "Cannot upload logs from device",
+                    Toast.LENGTH_LONG
+                ).show()
+                uploadButton.isEnabled = true
             }
+        ).also {
+            disposable.add(it)
+        }
     }
 }
