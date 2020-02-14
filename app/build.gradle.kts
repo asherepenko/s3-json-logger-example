@@ -126,7 +126,7 @@ val rxKotlinVersion = "2.4.0"
 dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.1.0")
+    implementation("androidx.core:core-ktx:1.2.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
     implementation("com.google.firebase:firebase-analytics:17.2.2")
