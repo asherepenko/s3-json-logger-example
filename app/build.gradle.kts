@@ -12,7 +12,7 @@ plugins {
 }
 
 val archivesBaseName = "s3-json-logger"
-val buildVersion = BuildVersion.parse(rootProject.file("version"))
+val buildVersion = BuildVersion(rootProject.file("version"))
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val awsPropertiesFile = project.file("aws.properties")
@@ -90,6 +90,13 @@ android {
                 storePassword = keystoreProperties.getProperty("keystore.password")
                 keyAlias = keystoreProperties.getProperty("keystore.key.alias")
                 keyPassword = keystoreProperties.getProperty("keystore.key.password")
+            } else {
+                val debugSigningConfig = getByName("debug")
+
+                storeFile = debugSigningConfig.storeFile
+                storePassword = debugSigningConfig.storePassword
+                keyAlias = debugSigningConfig.keyAlias
+                keyPassword = debugSigningConfig.keyPassword
             }
         }
     }
@@ -127,7 +134,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta4")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
     implementation("com.google.firebase:firebase-analytics:17.2.3")
     implementation("com.google.firebase:firebase-crashlytics:17.0.0-beta02")
@@ -138,9 +145,26 @@ dependencies {
     testImplementation("junit:junit:4.12")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "1.8"
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+
+    val incrementMajor by registering(IncrementVersion::class) {
+        increment = Increment.MAJOR
+        version = buildVersion
+    }
+
+    val incrementMinor by registering(IncrementVersion::class) {
+        increment = Increment.MINOR
+        version = buildVersion
+    }
+
+    val incrementPatch by registering(IncrementVersion::class) {
+        increment = Increment.PATCH
+        version = buildVersion
     }
 }
 
