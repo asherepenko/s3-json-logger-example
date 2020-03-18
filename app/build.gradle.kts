@@ -125,7 +125,7 @@ ktlint {
     }
 }
 
-val loggerVersion = "1.0.2"
+val loggerVersion = "1.0.3"
 val kodeinVersion = "6.5.3"
 val rxAndroidVersion = "2.1.1"
 val rxKotlinVersion = "2.4.0"
@@ -142,7 +142,7 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
     implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")
     implementation("org.kodein.di:kodein-di-framework-android-x:$kodeinVersion")
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13")
 }
 
 tasks {
