@@ -126,7 +126,7 @@ ktlint {
 }
 
 val loggerVersion = "1.0.3"
-val kodeinVersion = "6.5.4"
+val kodeinVersion = "6.5.5"
 val rxAndroidVersion = "2.1.1"
 val rxKotlinVersion = "2.4.0"
 
@@ -134,10 +134,10 @@ dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta4")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta5")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
-    implementation("com.google.firebase:firebase-analytics:17.3.0")
-    implementation("com.google.firebase:firebase-crashlytics:17.0.0-beta03")
+    implementation("com.google.firebase:firebase-analytics:17.4.1")
+    implementation("com.google.firebase:firebase-crashlytics:17.0.0")
     implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
     implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")
