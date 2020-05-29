@@ -64,6 +64,11 @@ android {
         }
     }
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -133,10 +138,10 @@ val rxKotlinVersion = "2.4.0"
 dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta5")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta6")
+    implementation("androidx.core:core-ktx:1.3.0")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
-    implementation("com.google.firebase:firebase-analytics:17.4.1")
+    implementation("com.google.firebase:firebase-analytics:17.4.2")
     implementation("com.google.firebase:firebase-crashlytics:17.0.0")
     implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
