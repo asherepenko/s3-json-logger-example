@@ -6,13 +6,13 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("com.android.application")
+    id("com.sherepenko.gradle.plugin-build-version") version "0.1.5"
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     kotlin("android")
     kotlin("android.extensions")
 }
 
 val archivesBaseName = "s3-json-logger"
-val buildVersion = BuildVersion(rootProject.file("version"))
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val awsPropertiesFile = project.file("aws.properties")
@@ -133,11 +133,11 @@ val rxKotlinVersion = "2.4.0"
 dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta5")
+    implementation("androidx.core:core-ktx:1.3.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta6")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
-    implementation("com.google.firebase:firebase-analytics:17.4.1")
-    implementation("com.google.firebase:firebase-crashlytics:17.0.0")
+    implementation("com.google.firebase:firebase-analytics:17.4.3")
+    implementation("com.google.firebase:firebase-crashlytics:17.0.1")
     implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
     implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")
@@ -150,21 +150,6 @@ tasks {
         kotlinOptions {
             jvmTarget = "1.8"
         }
-    }
-
-    val incrementMajor by registering(IncrementVersion::class) {
-        increment = Increment.MAJOR
-        version = buildVersion
-    }
-
-    val incrementMinor by registering(IncrementVersion::class) {
-        increment = Increment.MINOR
-        version = buildVersion
-    }
-
-    val incrementPatch by registering(IncrementVersion::class) {
-        increment = Increment.PATCH
-        version = buildVersion
     }
 }
 
