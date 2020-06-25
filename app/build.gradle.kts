@@ -18,11 +18,11 @@ val keystorePropertiesFile = rootProject.file("keystore.properties")
 val awsPropertiesFile = project.file("aws.properties")
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
 
     defaultConfig {
         minSdkVersion(19)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         applicationId = "com.sherepenko.android.logger.example"
         versionCode = buildVersion.versionCode
         versionName = buildVersion.versionName
