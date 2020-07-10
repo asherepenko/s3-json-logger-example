@@ -23,16 +23,17 @@ import com.sherepenko.android.archivarius.uploaders.S3LogUrlGeneratorApi
 import com.sherepenko.android.logger.Logger
 import com.sherepenko.android.logger.withTag
 import com.sherepenko.android.logger.withUserId
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 import java.io.File
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.factory
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.bind
+import org.kodein.di.factory
+import org.kodein.di.instance
+import org.kodein.di.singleton
 
-class App : Application(), KodeinAware {
+
+class App : Application(), DIAware {
 
     companion object {
 
@@ -45,12 +46,12 @@ class App : Application(), KodeinAware {
         private val currentUserId: Int = Process.myUid() / PER_USER_RANGE
     }
 
-    override val kodein by Kodein.lazy {
+    override val di by DI.lazy {
         import(androidXModule(this@App))
         import(applicationModule)
     }
 
-    private val applicationModule = Kodein.Module(APPLICATION_MODULE) {
+    private val applicationModule = DI.Module(APPLICATION_MODULE) {
         bind<ArchivariusAnalytics.ArchivariusAnalyticsImpl>() with singleton {
             object : ArchivariusAnalytics.ArchivariusAnalyticsImpl {
 
