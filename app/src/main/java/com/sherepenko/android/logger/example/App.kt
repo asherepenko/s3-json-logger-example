@@ -23,15 +23,14 @@ import com.sherepenko.android.archivarius.uploaders.S3LogUrlGeneratorApi
 import com.sherepenko.android.logger.Logger
 import com.sherepenko.android.logger.withTag
 import com.sherepenko.android.logger.withUserId
+import java.io.File
 import org.kodein.di.DI
 import org.kodein.di.DIAware
-import java.io.File
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.bind
 import org.kodein.di.factory
 import org.kodein.di.instance
 import org.kodein.di.singleton
-
 
 class App : Application(), DIAware {
 
