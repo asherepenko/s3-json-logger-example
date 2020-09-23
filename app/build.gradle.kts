@@ -6,7 +6,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.application")
     id("com.sherepenko.gradle.plugin-build-version") version "0.2.1"
-    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.0"
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -129,7 +129,7 @@ ktlint {
 }
 
 val loggerVersion = "1.0.3"
-val kodeinVersion = "7.0.0"
+val kodeinVersion = "7.1.0"
 val rxAndroidVersion = "2.1.1"
 val rxKotlinVersion = "2.4.0"
 
