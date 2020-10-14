@@ -136,16 +136,15 @@ val rxKotlinVersion = "2.4.0"
 dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.core:core-ktx:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.1")
+    implementation("androidx.core:core-ktx:1.3.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.2")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
-    implementation("com.google.firebase:firebase-analytics:17.5.0")
-    implementation("com.google.firebase:firebase-crashlytics:17.2.1")
+    implementation("com.google.firebase:firebase-analytics:17.6.0")
+    implementation("com.google.firebase:firebase-crashlytics:17.2.2")
     implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
     implementation("org.kodein.di:kodein-di-jvm:$kodeinVersion")
     implementation("org.kodein.di:kodein-di-framework-android-x:$kodeinVersion")
-    testImplementation("junit:junit:4.13")
 }
 
 apply(plugin = "com.google.gms.google-services")
