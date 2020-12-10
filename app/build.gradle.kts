@@ -140,7 +140,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
     implementation("com.google.firebase:firebase-analytics-ktx:18.0.0")
-    implementation("com.google.firebase:firebase-crashlytics-ktx:17.2.2")
+    implementation("com.google.firebase:firebase-crashlytics-ktx:17.3.0")
     implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
     implementation("org.kodein.di:kodein-di-jvm:$kodeinVersion")
