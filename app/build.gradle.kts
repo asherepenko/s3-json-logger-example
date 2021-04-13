@@ -6,7 +6,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.application")
     id("com.sherepenko.gradle.plugin-build-version") version "0.2.3"
-    id("org.jlleitschuh.gradle.ktlint") version "9.4.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -129,7 +129,7 @@ ktlint {
 }
 
 val loggerVersion = "1.0.3"
-val kodeinVersion = "7.1.0"
+val kodeinVersion = "7.5.0"
 val rxAndroidVersion = "2.1.1"
 val rxKotlinVersion = "2.4.0"
 
@@ -139,8 +139,8 @@ dependencies {
     implementation("androidx.core:core-ktx:1.3.2")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
-    implementation("com.google.firebase:firebase-analytics-ktx:18.0.0")
-    implementation("com.google.firebase:firebase-crashlytics-ktx:17.3.0")
+    implementation("com.google.firebase:firebase-analytics-ktx:18.0.2")
+    implementation("com.google.firebase:firebase-crashlytics-ktx:17.4.1")
     implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
     implementation("org.kodein.di:kodein-di-jvm:$kodeinVersion")
