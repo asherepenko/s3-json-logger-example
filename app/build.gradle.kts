@@ -6,9 +6,8 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id("com.android.application")
     id("com.sherepenko.gradle.plugin-build-version") version "0.2.3"
-    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     kotlin("android")
-    kotlin("android.extensions")
 }
 
 val archivesBaseName = "s3-json-logger"
@@ -17,11 +16,11 @@ val keystorePropertiesFile = rootProject.file("keystore.properties")
 val awsPropertiesFile = project.file("aws.properties")
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 31
 
     defaultConfig {
-        minSdkVersion(19)
-        targetSdkVersion(30)
+        minSdk = 21
+        targetSdk = 31
         applicationId = "com.sherepenko.android.logger.example"
         versionCode = buildVersion.versionCode
         versionName = buildVersion.versionName
@@ -63,16 +62,26 @@ android {
         }
     }
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    lintOptions {
+    lint {
+        isCheckDependencies = true
         ignore("InvalidPackage")
     }
 
@@ -105,7 +114,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
@@ -129,18 +138,19 @@ ktlint {
 }
 
 val loggerVersion = "1.0.3"
-val kodeinVersion = "7.5.0"
+val kodeinVersion = "7.8.0"
 val rxAndroidVersion = "2.1.1"
 val rxKotlinVersion = "2.4.0"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation(platform("com.google.firebase:firebase-bom:28.4.1"))
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
     implementation("com.github.asherepenko:archivarius-logger:$loggerVersion")
-    implementation("com.google.firebase:firebase-analytics-ktx:18.0.2")
-    implementation("com.google.firebase:firebase-crashlytics-ktx:17.4.1")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion")
     implementation("org.kodein.di:kodein-di-jvm:$kodeinVersion")

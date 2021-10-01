@@ -4,27 +4,31 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.sherepenko.android.logger.Logger
+import com.sherepenko.android.logger.example.databinding.ActivityMainBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.activity_main.uploadButton
 import org.kodein.di.DI
 import org.kodein.di.DIAware
-import org.kodein.di.android.di
-import org.kodein.di.generic.instance
+import org.kodein.di.android.closestDI
+import org.kodein.di.instance
 
 class MainActivity : AppCompatActivity(), DIAware {
 
-    override val di: DI by di()
+    override val di: DI by closestDI()
 
     private val logger: Logger by instance(arg = "MainActivity")
 
     private val disposable = CompositeDisposable()
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
         setupViews()
         logger.warning("Activity created")
     }
@@ -58,8 +62,8 @@ class MainActivity : AppCompatActivity(), DIAware {
     private fun setupViews() {
         supportActionBar?.setTitle(R.string.app_name)
 
-        uploadButton.setOnClickListener {
-            uploadButton.isEnabled = false
+        binding.uploadButton.setOnClickListener {
+            binding.uploadButton.isEnabled = false
             uploadLogs()
         }
     }
@@ -75,7 +79,7 @@ class MainActivity : AppCompatActivity(), DIAware {
                         "Logs successfully uploaded",
                         Toast.LENGTH_LONG
                     ).show()
-                    uploadButton.isEnabled = true
+                    binding.uploadButton.isEnabled = true
                 },
                 onError = {
                     logger.error("Cannot upload logs from device", it)
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity(), DIAware {
                         "Cannot upload logs from device",
                         Toast.LENGTH_LONG
                     ).show()
-                    uploadButton.isEnabled = true
+                    binding.uploadButton.isEnabled = true
                 }
             )
             .addTo(disposable)
